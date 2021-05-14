@@ -1,46 +1,52 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import UserSignIn from "../components/user/SignIn";
-import UserSignUp from "../components/user/SignUp";
+import DefaultLayout from "../layouts/default/Index";
+import AuthLayout from "../layouts/auth/Index";
 
+import AuthLogIn from "../views/auth/LogIn";
+import AuthSignUp from "../views/auth/SignUp";
+
+import ProductList from "../views/default/ProductList";
 
 Vue.use(VueRouter);
 
 const routes = [
-
-    {
-        path: '/',
-        name: '',
-        components: {
-            //menu: Menus,
-            //content: Main,
-        }
-    },
-
-    {
-        path: '/user/sign-in',
-        name: 'userSignIn',
-        components: {
-            // menu: Menus,
-            content: UserSignIn,
-        }
-    },
-    {
-      path: '/user/sign-up',
-      name: 'userSignUp',
-      components: {
-          // menu: Menus,
-          content: UserSignUp,
-      }
+  {
+    path: "/",
+    name: "root",
+    component: DefaultLayout,
+    children: [
+      {
+        path: "product-list",
+        name: "productList",
+        component: ProductList,
+      },
+    ],
   },
 
-]
+  {
+    path: "/auth",
+    name: "auth",
+    component: AuthLayout,
+    children: [
+      {
+        path: "log-in",
+        name: "authLogIn",
+        component: AuthLogIn,
+      },
+      {
+        path: "sign-up",
+        name: "authSignUp",
+        component: AuthSignUp,
+      },
+    ],
+  },
+];
 
 const router = new VueRouter({
-    mode: "history",
-    routes
+  mode: "history",
+  routes,
 });
-
 
 export default router;
