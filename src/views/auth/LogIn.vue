@@ -20,11 +20,15 @@
             </v-btn>
 
             <v-text-field
+              v-model="email"
+              type="email"
               label="이메일"
               clearable
               outlined
             />
             <v-text-field
+              v-model="password"
+              type="password"
               label="비밀번호"
               clearable
               outlined
@@ -35,6 +39,7 @@
               color="primary"
               depressed
               class="font-weight-bold mt-6"
+              @click="logIn"
             >
               로그인
             </v-btn>
@@ -77,12 +82,19 @@ export default {
     GoogleSignInButton
   },
   data: () => ({
+    email: "",
+    password: "",
     clientId: `${process.env.VUE_APP_GOOGLE_CLIENT_ID}`
   }),
   methods: {
+    logIn() {
+      let email = this.email
+      let password = this.password
+      this.$store.dispatch('login', { email, password });
+    },
     OnGoogleAuthSuccess (idToken) {
       console.log('succeed')
-      // Receive the idToken and make your magic with the backend
+      this.$store.dispatch('continueWithGoogle', idToken);
     },
     OnGoogleAuthFail (error) {
       console.log('failed')

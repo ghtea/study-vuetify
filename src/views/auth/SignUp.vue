@@ -40,6 +40,7 @@
               color="primary"
               depressed
               class="font-weight-bold mt-6"
+              @click="signUp"
             >
               회원가입
             </v-btn>
@@ -85,6 +86,15 @@ export default {
     clientId: `${process.env.VUE_APP_GOOGLE_CLIENT_ID}`
   }),
   methods: {
+    signUp: function() {
+      let data = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        is_admin: this.is_admin
+      }
+      this.$store.dispatch('signUp', data);
+    },
     OnGoogleAuthSuccess (idToken) {
       console.log('succeed')
       // Receive the idToken and make your magic with the backend
